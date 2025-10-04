@@ -29,10 +29,10 @@ namespace Asset_Management_Sciforn.Data
         public DateTime? WarrantyExpiryDate { get; set; }
 
         [Required(ErrorMessage = "Asset Condition is required.")]
-        public int AssetConditionId { get; set; }
+        public int? AssetConditionId { get; set; }
 
         [Required(ErrorMessage = "Asset Status is required.")]
-        public int AssetStatusId { get; set; }
+        public int? AssetStatusId { get; set; }
 
         public bool IsSpare { get; set; } = false;
 

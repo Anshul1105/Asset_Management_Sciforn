@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using Asset_Management_Sciforn.Components;
 using Asset_Management_Sciforn.Components.Account;
 using Asset_Management_Sciforn.Data;
@@ -42,7 +44,15 @@ builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSe
 // EF Core Implementations
 builder.Services.AddScoped<IAssetRepository, AssetRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddScoped<IAssetAssignedRepository, AssetAssignedRepository>();
 
+builder.Services.AddScoped<IAssetAssignedQueries, DapperAssetAssignedRepository>();
+
+builder.Services.AddScoped<IDbConnection>(sp =>
+{
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+    return new SqlConnection(connectionString);
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

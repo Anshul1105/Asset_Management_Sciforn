@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "0HrQuDCrtSo=",
+  "dgSpecHash": "sutJCI2kNNg=",
   "success": true,
   "projectFilePath": "/Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/Asset_Management_Sciforn.csproj",
   "expectedPackageFiles": [
     "/Users/Strider/.nuget/packages/azure.core/1.38.0/azure.core.1.38.0.nupkg.sha512",
     "/Users/Strider/.nuget/packages/azure.identity/1.11.4/azure.identity.1.11.4.nupkg.sha512",
+    "/Users/Strider/.nuget/packages/dapper/2.1.66/dapper.2.1.66.nupkg.sha512",
     "/Users/Strider/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/Strider/.nuget/packages/microsoft.aspnetcore.cryptography.internal/9.0.9/microsoft.aspnetcore.cryptography.internal.9.0.9.nupkg.sha512",
     "/Users/Strider/.nuget/packages/microsoft.aspnetcore.cryptography.keyderivation/9.0.9/microsoft.aspnetcore.cryptography.keyderivation.9.0.9.nupkg.sha512",

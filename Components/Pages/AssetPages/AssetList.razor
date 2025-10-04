@@ -100,15 +100,13 @@ else
     private IEnumerable<Asset> AllAssetList { get; set; } = new List<Asset>();
     private int DeleteAssetId { get; set; } = 0;
 
-  protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
             try
             {
-                Console.WriteLine("OnAfterRenderAsync firstRender triggered...");
                 AllAssetList = await _assetRepository.GetAllAsync();
-                Console.WriteLine($"Loaded {AllAssetList.Count()} assets");
             }
             catch (Exception ex)
             {
@@ -123,7 +121,6 @@ else
     }
 
 
-
     private async Task LoadAssets()
     {
         //Load All Assets
@@ -133,21 +130,21 @@ else
     private void HandleDelete(int id)
     {
         DeleteAssetId = id;
-        // _JS.InvokeVoidAsync("ShowConfirmationModal");
+        _JS.InvokeVoidAsync("ShowConfirmationModal");
     }
 
     private async Task ConfirmDeleteClick(bool isConfirmed)
     {
         IsProcessing = true;
-        //await _JS.InvokeVoidAsync("HideConfirmationModal");
+        await _JS.InvokeVoidAsync("HideConfirmationModal");
         if (isConfirmed && DeleteAssetId != 0)
         {
             var result = await _assetRepository.DeleteAsync(DeleteAssetId);
-           /* if (result)
+            if (result)
                 _JS?.ToastrSuccess("Asset Deleted Successfully");
             else
                 _JS?.ToastrError("Asset Deletion Failed. Please try again later.");
-*/
+
             await LoadAssets();
 
         }
@@ -156,4 +153,4 @@ else
         IsProcessing = false;
     }
 
-}
+}'

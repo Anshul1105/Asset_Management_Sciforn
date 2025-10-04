@@ -1,3 +1,11 @@
+/Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/obj/Debug/net9.0/Asset_Management_Sciforn.csproj.AssemblyReference.cache
+/Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/obj/Debug/net9.0/rpswa.dswa.cache.json
+/Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/obj/Debug/net9.0/Asset_Management_Sciforn.GeneratedMSBuildEditorConfig.editorconfig
+/Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/obj/Debug/net9.0/Asset_Management_Sciforn.AssemblyInfoInputs.cache
+/Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/obj/Debug/net9.0/Asset_Management_Sciforn.AssemblyInfo.cs
+/Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/obj/Debug/net9.0/Asset_Management_Sciforn.csproj.CoreCompileInputs.cache
+/Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/obj/Debug/net9.0/Asset_Management_Sciforn.MvcApplicationPartsAssemblyInfo.cache
+/Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/obj/Debug/net9.0/Asset_Management_Sciforn.sourcelink.json
 /Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/bin/Debug/net9.0/appsettings.Development.json
 /Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/bin/Debug/net9.0/appsettings.json
 /Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/bin/Debug/net9.0/Asset_Management_Sciforn.staticwebassets.runtime.json
@@ -10,6 +18,7 @@
 /Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/bin/Debug/net9.0/Asset_Management_Sciforn.pdb
 /Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/bin/Debug/net9.0/Azure.Core.dll
 /Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/bin/Debug/net9.0/Azure.Identity.dll
+/Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/bin/Debug/net9.0/Dapper.dll
 /Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/bin/Debug/net9.0/Humanizer.dll
 /Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/bin/Debug/net9.0/Microsoft.AspNetCore.Cryptography.Internal.dll
 /Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/bin/Debug/net9.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
@@ -144,14 +153,6 @@
 /Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/bin/Debug/net9.0/runtimes/win/lib/net6.0/System.Runtime.Caching.dll
 /Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/bin/Debug/net9.0/runtimes/win/lib/net6.0/System.Security.Cryptography.ProtectedData.dll
 /Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/bin/Debug/net9.0/runtimes/win/lib/net6.0/System.Windows.Extensions.dll
-/Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/obj/Debug/net9.0/Asset_Management_Sciforn.csproj.AssemblyReference.cache
-/Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/obj/Debug/net9.0/rpswa.dswa.cache.json
-/Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/obj/Debug/net9.0/Asset_Management_Sciforn.GeneratedMSBuildEditorConfig.editorconfig
-/Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/obj/Debug/net9.0/Asset_Management_Sciforn.AssemblyInfoInputs.cache
-/Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/obj/Debug/net9.0/Asset_Management_Sciforn.AssemblyInfo.cs
-/Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/obj/Debug/net9.0/Asset_Management_Sciforn.csproj.CoreCompileInputs.cache
-/Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/obj/Debug/net9.0/Asset_Management_Sciforn.MvcApplicationPartsAssemblyInfo.cache
-/Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/obj/Debug/net9.0/Asset_Management_Sciforn.sourcelink.json
 /Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/obj/Debug/net9.0/rjimswa.dswa.cache.json
 /Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/obj/Debug/net9.0/rjsmrazor.dswa.cache.json
 /Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/obj/Debug/net9.0/rjsmcshtml.dswa.cache.json

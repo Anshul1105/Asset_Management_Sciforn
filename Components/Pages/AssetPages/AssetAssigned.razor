@@ -1,0 +1,110 @@
+@* @page "/asset-assigned"
+@using Asset_Management_Sciforn.Data
+@using Asset_Management_Sciforn.Repository.IRepository
+@using Microsoft.AspNetCore.Components.Forms
+@inject IAssetAssignedRepository _assetAssignedRepository
+@inject IEmployeeRepository _employeeRepository
+@inject IAssetRepository _assetRepository
+@inject IJSRuntime _JS
+
+<div class="card shadow border-0 m-4">
+    <div class="card-header bg-black bg-gradient m-lg-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="py-2 text-white">Assigned Assets</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label class="form-label">Select Employee</label>
+                <select class="form-select" @bind="SelectedEmployeeId">
+                    <option value="">-- Select Employee --</option>
+                    @foreach (var emp in Employees)
+                    {
+                        <option value="@emp.Id">@emp.FullName</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Select Asset</label>
+                <select class="form-select" @bind="SelectedAssetId">
+                    <option value="">-- Select Asset --</option>
+                    @foreach (var asset in Assets)
+                    {
+                        <option value="@asset.Id">@asset.Name (@asset.AssetType)</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-4 d-flex align-items-end">
+                <button class="btn btn-primary w-100" @onclick="SearchAssignments">
+                    <i class="bi bi-search"></i> Search
+                </button>
+            </div>
+        </div>
+
+        @if (IsProcessing)
+        {
+            <div class="d-flex justify-content-center">
+                <img src="/images/loading.gif" alt="loading" />
+            </div>
+        }
+        else if (Assignments.Any())
+        {
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Employee</th>
+                        <th>Asset</th>
+                        <th>Assigned Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var assign in Assignments)
+                    {
+                        <tr>
+                            <td>@assign.Employee?.Name</td>
+                            <td>@assign.Asset?.Name (@assign.Asset?.AssetType)</td>
+                            <td>@assign.AssignedDate.ToString("dd/MM/yyyy")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-info">No assignments found.</div>
+        }
+    </div>
+</div>
+
+@code {
+    private bool IsProcessing { get; set; } = true;
+    private IEnumerable<AssetAssigned> Assignments { get; set; } = new List<AssetAssigned>();
+    private IEnumerable<Employee> Employees { get; set; } = new List<Employee>();
+    private IEnumerable<Asset> Assets { get; set; } = new List<Asset>();
+
+    private int? SelectedEmployeeId { get; set; }
+    private int? SelectedAssetId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        IsProcessing = true;
+
+        Employees = await _employeeRepository.GetAllAsync();
+        Assets = await _assetRepository.GetAllAsync();
+        Assignments = await _assetAssignedRepository.GetAllAsync();
+
+        IsProcessing = false;
+    }
+
+    private async Task SearchAssignments()
+    {
+        IsProcessing = true;
+
+        Assignments = await _assetAssignedRepository.SearchAsync(SelectedEmployeeId, SelectedAssetId);
+
+        IsProcessing = false;
+    }
+} *@
