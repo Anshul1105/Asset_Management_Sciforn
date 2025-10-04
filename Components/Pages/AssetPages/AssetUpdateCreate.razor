@@ -1,0 +1,198 @@
+@page "/asset/create"
+@page "/asset/update/{id:int}"
+@using Asset_Management_Sciforn.Data
+@using Asset_Management_Sciforn.Repository.IRepository
+@using Asset_Management_Sciforn.Services.Extensions
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Authorization
+@inject IAssetRepository _assetRepository
+@inject NavigationManager _navigationManager
+@inject IJSRuntime _JS
+@inject ApplicationDbContext _db
+
+
+@if (IsProcessing)
+{
+    <div class="position-absolute w-100 vh-100 d-flex flex-column align-items-center bg-white justify-content-center">
+        <img src="/images/loading.gif" alt="loading" />
+    </div>
+}
+else
+{
+
+    <div class="card shadow border-0 m-4">
+        <div class="card-header bg-black bg-gradient m-lg-0 py-3">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h2 class="py-2 text-white"> @(Id == 0 ? "Create" : "Update") Asset</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body p-4">
+            <EditForm Model="AssetModel" OnValidSubmit="UpsertAsset">
+                <DataAnnotationsValidator />
+
+                <div class="border p-3 mt-4">
+
+                    <div class="form-floating mb-3 col-12">
+                        <InputText @bind-Value="AssetModel.Name" class="form-control" id="Name" />
+                        <label for="Name">Name</label>
+                        <ValidationMessage For="@(() => AssetModel.Name)" />
+                    </div>
+
+                    <div class="form-floating mb-3 col-12">
+                        <InputText @bind-Value="AssetModel.AssetType" class="form-control" id="AssetType" />
+                        <label for="AssetType">Asset Type</label>
+                        <ValidationMessage For="@(() => AssetModel.AssetType)" />
+                    </div>
+
+                    <div class="form-floating mb-3 col-12">
+                        <InputText @bind-Value="AssetModel.MakeModel" class="form-control" id="MakeModel" />
+                        <label for="MakeModel">Make / Model</label>
+                        <ValidationMessage For="@(() => AssetModel.MakeModel)" />
+                    </div>
+
+                    <div class="form-floating mb-3 col-12">
+                        <InputText @bind-Value="AssetModel.SerialNumber" class="form-control" id="SerialNumber" />
+                        <label for="SerialNumber">Serial Number</label>
+                        <ValidationMessage For="@(() => AssetModel.SerialNumber)" />
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6 form-floating">
+                            <InputDate @bind-Value="AssetModel.PurchaseDate" class="form-control" id="PurchaseDate" />
+                            <label for="PurchaseDate">Purchase Date</label>
+                            <ValidationMessage For="@(() => AssetModel.PurchaseDate)" />
+                        </div>
+                        <div class="col-md-6 form-floating">
+                            <InputDate @bind-Value="AssetModel.WarrantyExpiryDate" class="form-control"
+                                id="WarrantyExpiryDate" />
+                            <label for="WarrantyExpiryDate">Warranty Expiry Date</label>
+                            <ValidationMessage For="@(() => AssetModel.WarrantyExpiryDate)" />
+                        </div>
+                    </div>
+
+                    <div class="form-floating mb-3 col-12">
+                        <InputSelect @bind-Value="AssetModel.AssetConditionId" class="form-select" id="AssetCondition">
+                            <option value="0" disabled selected>---Choose an Asset Condition---</option>
+                            @foreach (var c in _conditions)
+                            {
+                                <option value="@c.Id">@c.ConditionName</option>
+                            }
+                        </InputSelect>
+                        <label for="AssetCondition">Asset Condition</label>
+                        <ValidationMessage For="@(() => AssetModel.AssetConditionId)" />
+                    </div>
+
+                    <div class="form-floating mb-3 col-12">
+                        <InputSelect @bind-Value="AssetModel.AssetStatusId" class="form-select" id="AssetStatus">
+                            <option value="0" disabled selected>---Choose an Asset Status---</option>
+                            @foreach (var s in _statuses)
+                            {
+                                <option value="@s.Id">@s.StatusName</option>
+                            }
+                        </InputSelect>
+                        <label for="AssetStatus">Asset Status</label>
+                        <ValidationMessage For="@(() => AssetModel.AssetStatusId)" />
+                    </div>
+
+                    <div class="form-check mb-3">
+                        <InputCheckbox @bind-Value="AssetModel.IsSpare" class="form-check-input" id="IsSpare" />
+                        <label class="form-check-label" for="IsSpare">Is Spare?</label>
+                    </div>
+
+                    <div class="form-floating mb-3 col-12">
+                        <InputTextArea @bind-Value="AssetModel.Specifications" class="form-control large-textarea"
+                            id="Specifications" />
+                        <label for="Specifications">Specifications</label>
+                        <ValidationMessage For="@(() => AssetModel.Specifications)" />
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-6 col-md-3">
+                            <button type="submit" class="btn btn-primary form-control" disabled="@IsProcessing">
+                                <i class="bi bi-floppy2-fill"></i>
+                                @(Id == 0 ? "Create" : "Update")
+                            </button>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <a href="/asset" class="btn btn-secondary form-control" disabled="@IsProcessing">
+                                <i class="bi bi-arrow-bar-left"></i>
+                                Back to List
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </EditForm>
+        </div>
+    </div>
+}
+
+
+@code {
+
+    [Parameter] public int Id { get; set; }
+    [SupplyParameterFromForm] private Asset AssetModel { get; set; } = new Asset();
+
+    private IEnumerable<AssetCondition> _conditions { get; set; } = new List<AssetCondition>();
+    private IEnumerable<AssetStatus> _statuses { get; set; } = new List<AssetStatus>();
+
+    private bool IsProcessing { get; set; } = true;
+
+    protected override Task OnInitializedAsync()
+    {
+        return base.OnInitializedAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await LoadAssetAndLookups();
+            IsProcessing = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task LoadAssetAndLookups()
+    {
+        if (Id > 0)
+        {
+            AssetModel = await _assetRepository.GetAsync(Id);
+        }
+
+        _conditions = await _db.AssetCondition.ToListAsync();
+        _statuses = await _db.AssetStatus.ToListAsync();
+    }
+
+    private async Task UpsertAsset()
+    {
+        IsProcessing = true;
+
+        if (AssetModel.Id == 0)
+        {
+            await _assetRepository.CreateAsync(AssetModel);
+            await _JS.ToastrSuccess("Asset Created Successfully");
+        }
+        else
+        {
+            await _assetRepository.UpdateAsync(AssetModel);
+            await _JS.ToastrSuccess("Asset Updated Successfully");
+        }
+
+        IsProcessing = false;
+        _navigationManager.NavigateTo("/asset");
+    }
+
+}
+
+
+<style>
+    .large-textarea {
+        height: 160px;
+        resize: vertical;
+    }
+</style>

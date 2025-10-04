@@ -1,0 +1,166 @@
+@page "/asset"
+@using System.Globalization
+@using System.Text.Json
+@using Asset_Management_Sciforn.Data
+@using Asset_Management_Sciforn.Repository.IRepository
+@using Asset_Management_Sciforn.Services.Extensions
+@using Humanizer
+@using Microsoft.AspNetCore.Authorization
+
+@inject IAssetRepository _assetRepository
+@inject IJSRuntime _JS
+
+
+<BsModal OnModalConfirmation="ConfirmDeleteClick" ButtonBootStrapStyle="btn-danger" ButtonText="Delete"
+    Title="Are you sure you want to delete this Asset"></BsModal>
+
+
+@if (IsProcessing)
+{
+    <div class="position-absolute w-100 vh-100 d-flex flex-column align-items-center bg-white justify-content-center">
+        <img src="/images/loading.gif" alt="loading" />
+    </div>
+}
+else
+{
+    <div class="card shadow border-0 m-4">
+        <div class="card-header bg-black bg-gradient m-lg-0 py-3">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h2 class="py-2 text-white">Asset List</h2>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-4">
+            <div class="row pb-3">
+                <div class="col-12 text-end">
+                    <a href="/asset/create" class="btn btn-lg btn-secondary" style="width:250px">
+                        <i class="bi bi-plus-square-fill"></i> Add new Asset
+                    </a>
+                </div>
+            </div>
+            @if (Assets.Any())
+            {
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Asset Type</th>
+                            <th>Make/Model</th>
+                            <th>Purchase Date</th>
+                            <th>Warranty Expiry Date</th>
+                            <th>Asset Condition</th>
+                            <th>Asset Status</th>
+                            <th>Is Spare?</th>
+                            <th>Specification</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var obj in Assets)
+                        {
+                            <tr>
+                                <td>@obj.Name</td>
+                                <td>@obj.AssetType</td>
+                                <td>@obj.MakeModel</td>
+                                <td>@obj.PurchaseDate.ToString("dd/MM/yyyy")</td>
+                                <td>@obj.WarrantyExpiryDate?.ToString("dd/MM/yyyy")</td>
+                                <td>@obj.AssetCondition?.ConditionName</td>
+                                <td>@obj.AssetStatus?.StatusName</td>
+                                <td>
+                                    @if (obj.IsSpare)
+                                    {
+                                        <span>Yes</span>
+                                    }
+                                    else
+                                    {
+                                        <span>No</span>
+                                    }
+                                </td>
+                                <td>@obj.Specifications</td>
+
+                                <td>
+                                    <a href="@($"/asset/update/{obj.Id}")" class="btn btn-primary"><i
+                                            class="bi bi-pencil-square"></i> Edit </a>
+                                    <button class="btn btn-danger" @onclick="() => HandleDelete(obj.Id)"><i
+                                            class="bi bi-trash3-fill"></i> Delete </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+}
+
+
+@code {
+
+    private bool IsProcessing { get; set; } = true;
+    private IEnumerable<Asset> Assets { get; set; } = new List<Asset>();
+    private int DeleteAssetId { get; set; } = 0;
+
+
+    // protected override async Task OnInitializedAsync()
+    // {
+    // IsProcessing = true;
+    // await LoadAssets();
+    // Thread.Sleep(5000);
+    // IsProcessing = false;
+    // }
+
+
+    // *** Better to use this to load data compared to OnInitializedAsync in case of Page/Component Level Interactivity
+    // Blazor Server Pre renders the component in the server and then on the client side it renders again, So in global
+    // level, we wont see this, 
+    // BUT when using local interactivity per component, we might see this being called twice, leading to data being loaded
+    // twice.Therefore better To do it in AfterRenderAsync
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            // IsProcessing = true;
+            // StateHasChanged();
+
+            await LoadAssets();
+            IsProcessing = false;
+            // Invoked only the first render
+
+            StateHasChanged(); // This will re-render the component after the data is loaded
+        }
+    }
+
+    private async Task LoadAssets()
+    {
+        //Load Assets
+        Assets = await _assetRepository.GetAllAsync();
+    }
+
+    private void HandleDelete(int id)
+    {
+        DeleteAssetId = id;
+        _JS.InvokeVoidAsync("ShowConfirmationModal");
+    }
+
+    private async Task ConfirmDeleteClick(bool isConfirmed)
+    {
+        IsProcessing = true;
+        await _JS.InvokeVoidAsync("HideConfirmationModal");
+        if (isConfirmed && DeleteAssetId != 0)
+        {
+            var result = await _assetRepository.DeleteAsync(DeleteAssetId);
+            if (result)
+                _JS?.ToastrSuccess("Asset Deleted Successfully");
+            else
+                _JS?.ToastrError("Asset Deletion Failed. Please try again later.");
+
+            await LoadAssets();
+
+        }
+
+        DeleteAssetId = 0;
+        IsProcessing = false;
+    }
+
+}

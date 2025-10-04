@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Asset_Management_Sciforn")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d1dde1d1e94f939ded535337b6370fa6e6a1e423")]
 [assembly: System.Reflection.AssemblyProductAttribute("Asset_Management_Sciforn")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Asset_Management_Sciforn")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
