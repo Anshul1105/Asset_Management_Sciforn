@@ -24,18 +24,17 @@ namespace Asset_Management_Sciforn.Data
         public string? SerialNumber { get; set; }
 
         [Required(ErrorMessage = "Purchase Date is required.")]
-        public DateTime PurchaseDate { get; set; }
+        public DateTime PurchaseDate { get; set; } = DateTime.Now;
 
         public DateTime? WarrantyExpiryDate { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Asset Condition is required.")]
         public int AssetConditionId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Asset Status is required.")]
         public int AssetStatusId { get; set; }
 
-        [Required]
-        public bool IsSpare { get; set; }
+        public bool IsSpare { get; set; } = false;
 
         [MaxLength(500)]
         public string? Specifications { get; set; }

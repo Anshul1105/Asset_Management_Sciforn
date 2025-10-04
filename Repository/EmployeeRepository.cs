@@ -44,7 +44,9 @@ namespace Asset_Management_Sciforn.Repository
             var obj = await _db.Employee.FirstOrDefaultAsync(e => e.Id == id);
             if (obj != null)
             {
-                _db.Employee.Remove(obj);
+                obj.IsActive = false;
+                _db.Employee.Update(obj);
+                // _db.Employee.Remove(obj);
                 return (await _db.SaveChangesAsync()) > 0;
             }
             return false;

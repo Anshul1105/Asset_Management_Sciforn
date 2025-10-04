@@ -196,6 +196,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Db3VudGVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/Components/Pages/EmployeePages/EmployeeList.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9FbXBsb3llZVBhZ2VzL0VtcGxveWVlTGlzdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/Components/Pages/EmployeePages/EmployeeUpdateCreate.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9FbXBsb3llZVBhZ2VzL0VtcGxveWVlVXBkYXRlQ3JlYXRlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/Components/Pages/Error.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9FcnJvci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 

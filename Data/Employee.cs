@@ -28,8 +28,7 @@ namespace Asset_Management_Sciforn.Data
         public string? Designation { get; set; }
 
         [Required]
-        [MaxLength(10)]
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
         public ICollection<AssetAssigned> AssetAssignments { get; set; }
     }
 }

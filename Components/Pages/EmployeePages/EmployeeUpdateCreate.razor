@@ -1,0 +1,146 @@
+@page "/employee/create"
+@page "/employee/update/{id:int}"
+@using Asset_Management_Sciforn.Data
+@using Asset_Management_Sciforn.Repository.IRepository
+@using Asset_Management_Sciforn.Services.Extensions
+@using Microsoft.AspNetCore.Authorization
+
+@inject IEmployeeRepository _employeeRepository
+@inject NavigationManager _navigationManager
+@inject IJSRuntime _JS
+
+
+@if (IsProcessing)
+{
+    <div class="position-absolute w-100 vh-100 d-flex flex-column align-items-center bg-white justify-content-center">
+        <img src="/images/loading.gif" alt="loading" />
+    </div>
+}
+else
+{
+
+    <div class="card shadow border-0 m-4">
+        <div class="card-header bg-black bg-gradient m-lg-0 py-3">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h2 class="py-2 text-white"> @(Id == 0 ? "Create" : "Update") Employee</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body p-4">
+            <EditForm Model="EmployeeModel" OnValidSubmit="UpsertEmployee">
+                <DataAnnotationsValidator />
+
+                <div class="border p-3 mt-4">
+
+                    <div class="form-floating mb-3 col-12">
+                        <InputText @bind-Value="EmployeeModel.FullName" class="form-control" id="FullName" />
+                        <label for="FullName">Full Name</label>
+                        <ValidationMessage For="@(() => EmployeeModel.FullName)" />
+                    </div>
+
+                    <div class="form-floating mb-3 col-12">
+                        <InputText @bind-Value="EmployeeModel.Department" class="form-control" id="Department" />
+                        <label for="Department">Department</label>
+                        <ValidationMessage For="@(() => EmployeeModel.Department)" />
+                    </div>
+
+                    <div class="form-floating mb-3 col-12">
+                        <InputText @bind-Value="EmployeeModel.Designation" class="form-control" id="Designation" />
+                        <label for="Designation">Designation</label>
+                        <ValidationMessage For="@(() => EmployeeModel.Designation)" />
+                    </div>
+
+                    <div class="form-floating mb-3 col-12">
+                        <InputText @bind-Value="EmployeeModel.Email" class="form-control" id="Email" />
+                        <label for="Email">Email</label>
+                        <ValidationMessage For="@(() => EmployeeModel.Email)" />
+                    </div>
+
+                    <div class="form-floating mb-3 col-12">
+                        <InputText @bind-Value="EmployeeModel.PhoneNumber" class="form-control" id="PhoneNumber" />
+                        <label for="PhoneNumber">Phone Number</label>
+                        <ValidationMessage For="@(() => EmployeeModel.PhoneNumber)" />
+                    </div>
+
+                    @* <div class="form-check mb-3">
+                        <InputCheckbox @bind-Value="EmployeeModel.IsActive" class="form-check-input" id="IsActive" />
+                        <label class="form-check-label" for="IsActive">Is Active?</label>
+                    </div> *@
+
+                    <div class="row mt-3">
+                        <div class="col-6 col-md-3">
+                            <button type="submit" class="btn btn-primary form-control" disabled="@IsProcessing">
+                                <i class="bi bi-floppy2-fill"></i>
+                                @(Id == 0 ? "Create" : "Update")
+                            </button>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <a href="/employee" class="btn btn-secondary form-control" disabled="@IsProcessing">
+                                <i class="bi bi-arrow-bar-left"></i>
+                                Back to List
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </EditForm>
+        </div>
+    </div>
+}
+
+
+@code {
+
+    [Parameter] public int Id { get; set; }
+    [SupplyParameterFromForm] private Employee EmployeeModel { get; set; } = new Employee();
+
+    private bool IsProcessing { get; set; } = true;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await LoadEmployee();
+            IsProcessing = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task LoadEmployee()
+    {
+        if (Id > 0)
+        {
+            EmployeeModel = await _employeeRepository.GetAsync(Id);
+        }
+    }
+
+    private async Task UpsertEmployee()
+    {
+        IsProcessing = true;
+
+        if (EmployeeModel.Id == 0)
+        {
+            await _employeeRepository.CreateAsync(EmployeeModel);
+            await _JS.ToastrSuccess("Employee Created Successfully");
+        }
+        else
+        {
+            await _employeeRepository.UpdateAsync(EmployeeModel);
+            await _JS.ToastrSuccess("Employee Updated Successfully");
+        }
+
+        IsProcessing = false;
+        _navigationManager.NavigateTo("/employee");
+    }
+
+}
+
+<style>
+    .large-textarea {
+        height: 160px;
+        resize: vertical;
+    }
+</style>
