@@ -89,7 +89,7 @@ namespace Asset_Management_Sciforn.Migrations
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
                     Designation = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", maxLength: 10, nullable: false)
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -283,6 +283,36 @@ namespace Asset_Management_Sciforn.Migrations
                     { 2, "Assigned" },
                     { 3, "Under Repair" },
                     { 4, "Retired" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Employee",
+                columns: new[] { "Id", "Department", "Designation", "Email", "FullName", "IsActive", "PhoneNumber" },
+                values: new object[,]
+                {
+                    { 1, "IT", "Software Engineer", "alice.johnson@example.com", "Alice Johnson", true, "9876543210" },
+                    { 2, "Finance", "Accountant", "bob.smith@example.com", "Bob Smith", true, "9876543211" },
+                    { 3, "HR", "HR Manager", "carol.davis@example.com", "Carol Davis", true, "9876543212" },
+                    { 4, "IT", "System Administrator", "david.brown@example.com", "David Brown", true, "9876543213" },
+                    { 5, "Operations", "Operations Manager", "eva.wilson@example.com", "Eva Wilson", true, "9876543214" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Asset",
+                columns: new[] { "Id", "AssetConditionId", "AssetStatusId", "AssetType", "IsSpare", "MakeModel", "Name", "PurchaseDate", "SerialNumber", "Specifications", "WarrantyExpiryDate" },
+                values: new object[,]
+                {
+                    { 1, 1, 1, "Laptop", false, "Latitude 7420", "Dell Latitude Laptop", new DateTime(2023, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "DL7420X123", "Intel i7, 16GB RAM, 512GB SSD", new DateTime(2026, 1, 14, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, 2, 2, "Desktop", false, "ProDesk 400 G7", "HP ProDesk Desktop", new DateTime(2022, 6, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "HP400G7X456", "Intel i5, 8GB RAM, 1TB HDD", new DateTime(2025, 6, 9, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 3, 3, 3, "Projector", false, "EB-X41", "Epson Projector", new DateTime(2021, 11, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "EPX41Y789", "XGA, 3600 Lumens", new DateTime(2024, 11, 19, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 4, 4, 4, "Networking", false, "RV340", "Cisco Router", new DateTime(2020, 8, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "CISR340Z101", "Dual WAN, Gigabit Ethernet", new DateTime(2023, 8, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 5, 1, 1, "Peripheral", true, "MX Master 3", "Logitech Mouse", new DateTime(2023, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "LOGMX30012", "Wireless, Rechargeable", new DateTime(2025, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 6, 1, 2, "Laptop", false, "MacBook Pro 14", "Apple MacBook Pro", new DateTime(2024, 3, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), "MBP14X999", "M2 Pro, 16GB RAM, 1TB SSD", new DateTime(2027, 3, 11, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 7, 2, 1, "Monitor", true, "S24R350", "Samsung Monitor", new DateTime(2022, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "SAMON24123", "24-inch, Full HD, LED", new DateTime(2025, 12, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 8, 3, 3, "Printer", false, "MFP M227fdw", "HP LaserJet Printer", new DateTime(2021, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "HP227X321", "Laser, Duplex, Wireless", new DateTime(2024, 5, 19, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 9, 4, 4, "Laptop", false, "ThinkPad X1", "Lenovo ThinkPad Laptop", new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "LTPX11234", "Intel i7, 16GB RAM, 512GB SSD", new DateTime(2023, 8, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 10, 1, 2, "Tablet", false, "iPad Air 5", "Apple iPad", new DateTime(2023, 7, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "IPAD5X678", "10.9-inch, 256GB, Wi-Fi", new DateTime(2026, 7, 9, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 11, 2, 1, "Accessory", true, "WD19", "Dell Docking Station", new DateTime(2023, 2, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "DELD19X890", "USB-C, Multiple Ports", new DateTime(2025, 2, 13, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.CreateIndex(

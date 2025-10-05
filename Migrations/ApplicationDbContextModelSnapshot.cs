@@ -139,6 +139,162 @@ namespace Asset_Management_Sciforn.Migrations
                     b.HasIndex("AssetStatusId");
 
                     b.ToTable("Asset");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AssetConditionId = 1,
+                            AssetStatusId = 1,
+                            AssetType = "Laptop",
+                            IsSpare = false,
+                            MakeModel = "Latitude 7420",
+                            Name = "Dell Latitude Laptop",
+                            PurchaseDate = new DateTime(2023, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            SerialNumber = "DL7420X123",
+                            Specifications = "Intel i7, 16GB RAM, 512GB SSD",
+                            WarrantyExpiryDate = new DateTime(2026, 1, 14, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AssetConditionId = 2,
+                            AssetStatusId = 2,
+                            AssetType = "Desktop",
+                            IsSpare = false,
+                            MakeModel = "ProDesk 400 G7",
+                            Name = "HP ProDesk Desktop",
+                            PurchaseDate = new DateTime(2022, 6, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            SerialNumber = "HP400G7X456",
+                            Specifications = "Intel i5, 8GB RAM, 1TB HDD",
+                            WarrantyExpiryDate = new DateTime(2025, 6, 9, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AssetConditionId = 3,
+                            AssetStatusId = 3,
+                            AssetType = "Projector",
+                            IsSpare = false,
+                            MakeModel = "EB-X41",
+                            Name = "Epson Projector",
+                            PurchaseDate = new DateTime(2021, 11, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            SerialNumber = "EPX41Y789",
+                            Specifications = "XGA, 3600 Lumens",
+                            WarrantyExpiryDate = new DateTime(2024, 11, 19, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AssetConditionId = 4,
+                            AssetStatusId = 4,
+                            AssetType = "Networking",
+                            IsSpare = false,
+                            MakeModel = "RV340",
+                            Name = "Cisco Router",
+                            PurchaseDate = new DateTime(2020, 8, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            SerialNumber = "CISR340Z101",
+                            Specifications = "Dual WAN, Gigabit Ethernet",
+                            WarrantyExpiryDate = new DateTime(2023, 8, 4, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 5,
+                            AssetConditionId = 1,
+                            AssetStatusId = 1,
+                            AssetType = "Peripheral",
+                            IsSpare = true,
+                            MakeModel = "MX Master 3",
+                            Name = "Logitech Mouse",
+                            PurchaseDate = new DateTime(2023, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            SerialNumber = "LOGMX30012",
+                            Specifications = "Wireless, Rechargeable",
+                            WarrantyExpiryDate = new DateTime(2025, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 6,
+                            AssetConditionId = 1,
+                            AssetStatusId = 2,
+                            AssetType = "Laptop",
+                            IsSpare = false,
+                            MakeModel = "MacBook Pro 14",
+                            Name = "Apple MacBook Pro",
+                            PurchaseDate = new DateTime(2024, 3, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            SerialNumber = "MBP14X999",
+                            Specifications = "M2 Pro, 16GB RAM, 1TB SSD",
+                            WarrantyExpiryDate = new DateTime(2027, 3, 11, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 7,
+                            AssetConditionId = 2,
+                            AssetStatusId = 1,
+                            AssetType = "Monitor",
+                            IsSpare = true,
+                            MakeModel = "S24R350",
+                            Name = "Samsung Monitor",
+                            PurchaseDate = new DateTime(2022, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            SerialNumber = "SAMON24123",
+                            Specifications = "24-inch, Full HD, LED",
+                            WarrantyExpiryDate = new DateTime(2025, 12, 4, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 8,
+                            AssetConditionId = 3,
+                            AssetStatusId = 3,
+                            AssetType = "Printer",
+                            IsSpare = false,
+                            MakeModel = "MFP M227fdw",
+                            Name = "HP LaserJet Printer",
+                            PurchaseDate = new DateTime(2021, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            SerialNumber = "HP227X321",
+                            Specifications = "Laser, Duplex, Wireless",
+                            WarrantyExpiryDate = new DateTime(2024, 5, 19, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 9,
+                            AssetConditionId = 4,
+                            AssetStatusId = 4,
+                            AssetType = "Laptop",
+                            IsSpare = false,
+                            MakeModel = "ThinkPad X1",
+                            Name = "Lenovo ThinkPad Laptop",
+                            PurchaseDate = new DateTime(2020, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            SerialNumber = "LTPX11234",
+                            Specifications = "Intel i7, 16GB RAM, 512GB SSD",
+                            WarrantyExpiryDate = new DateTime(2023, 8, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 10,
+                            AssetConditionId = 1,
+                            AssetStatusId = 2,
+                            AssetType = "Tablet",
+                            IsSpare = false,
+                            MakeModel = "iPad Air 5",
+                            Name = "Apple iPad",
+                            PurchaseDate = new DateTime(2023, 7, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            SerialNumber = "IPAD5X678",
+                            Specifications = "10.9-inch, 256GB, Wi-Fi",
+                            WarrantyExpiryDate = new DateTime(2026, 7, 9, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 11,
+                            AssetConditionId = 2,
+                            AssetStatusId = 1,
+                            AssetType = "Accessory",
+                            IsSpare = true,
+                            MakeModel = "WD19",
+                            Name = "Dell Docking Station",
+                            PurchaseDate = new DateTime(2023, 2, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            SerialNumber = "DELD19X890",
+                            Specifications = "USB-C, Multiple Ports",
+                            WarrantyExpiryDate = new DateTime(2025, 2, 13, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("Asset_Management_Sciforn.Data.AssetAssigned", b =>
@@ -284,6 +440,58 @@ namespace Asset_Management_Sciforn.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Employee");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Department = "IT",
+                            Designation = "Software Engineer",
+                            Email = "alice.johnson@example.com",
+                            FullName = "Alice Johnson",
+                            IsActive = true,
+                            PhoneNumber = "9876543210"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Department = "Finance",
+                            Designation = "Accountant",
+                            Email = "bob.smith@example.com",
+                            FullName = "Bob Smith",
+                            IsActive = true,
+                            PhoneNumber = "9876543211"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Department = "HR",
+                            Designation = "HR Manager",
+                            Email = "carol.davis@example.com",
+                            FullName = "Carol Davis",
+                            IsActive = true,
+                            PhoneNumber = "9876543212"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Department = "IT",
+                            Designation = "System Administrator",
+                            Email = "david.brown@example.com",
+                            FullName = "David Brown",
+                            IsActive = true,
+                            PhoneNumber = "9876543213"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Department = "Operations",
+                            Designation = "Operations Manager",
+                            Email = "eva.wilson@example.com",
+                            FullName = "Eva Wilson",
+                            IsActive = true,
+                            PhoneNumber = "9876543214"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
