@@ -123,9 +123,9 @@ else
         {
             var result = await _employeeRepository.DeleteAsync(DeleteEmployeeId);
             if (result)
-                _JS?.ToastrSuccess("Employee Deleted Successfully");
+                _JS?.ToastrSuccess(message: "Employee Deleted Successfully");
             else
-                _JS?.ToastrError("Employee Deletion Failed. Please try again later.");
+                _JS?.ToastrError(message: "Employee Deletion Failed. Please try again later.");
 
             await LoadEmployees();
 

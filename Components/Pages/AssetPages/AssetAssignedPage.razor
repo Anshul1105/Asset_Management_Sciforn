@@ -39,10 +39,9 @@
                 </select>
             </div>
             <div class="col-md-4 d-flex align-items-end">
-                @* <button class="btn btn-primary w-100">  *@
-                <button class="btn btn-primary w-100" @onclick="AssignAsset"> 
+                <button class="btn btn-primary w-100" @onclick="AssignAsset">
                     <i class="bi bi-search"></i> Assign Asset
-                </button> 
+                </button>
             </div>
         </div>
 
@@ -90,36 +89,57 @@
     private int? SelectedEmployeeId { get; set; }
     private int? SelectedAssetId { get; set; }
 
-    protected override async Task OnInitializedAsync()
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await LoadDataAsync();
+        }
+    }
+
+    private async Task LoadDataAsync()
     {
         IsProcessing = true;
+        StateHasChanged(); 
 
         Employees = await _employeeRepository.GetAllAsync();
-        AllAssetList = await _assetRepository.GetAllAsync();
+        AllAssetList = await _assetRepository.GetAllAvailableAssetAsync();
         Assignments = await _assetAssignedRepository.GetAllAsync();
 
         IsProcessing = false;
+        StateHasChanged(); 
     }
-
     private async Task AssignAsset()
     {
-        if (SelectedEmployeeId.HasValue && SelectedAssetId.HasValue)
-        {
-            AssetAssigned? newAssignment = new AssetAssigned
-            {
-                EmployeeId = SelectedEmployeeId.Value,
-                AssetId = SelectedAssetId.Value,
-                AssignedDate = DateTime.Now
-            };
-
-            await _assetAssignedRepository.CreateAsync(newAssignment);
-            await _JS.ToastrSuccess(message: "Asset assigned successfully.");
-
-            Assignments = await _assetAssignedRepository.GetAllAsync();
-        }
-        else
+        if (!SelectedEmployeeId.HasValue || !SelectedAssetId.HasValue)
         {
             await _JS.ToastrError(message: "Please select both an employee and an asset.");
+            return;
         }
+
+        AssetAssigned? existingAssignment = Assignments.FirstOrDefault(a => a.AssetId == SelectedAssetId.Value);
+        if (existingAssignment != null)
+        {
+            await _JS.ToastrError(message: "This asset is already assigned.");
+            return;
+        }
+
+        AssetAssigned? newAssignment = new AssetAssigned
+        {
+            EmployeeId = SelectedEmployeeId.Value,
+            AssetId = SelectedAssetId.Value,
+            AssignedDate = DateTime.Now
+        };
+
+        await _assetAssignedRepository.CreateAsync(newAssignment);
+        await _assetRepository.UpdateAssetStatusAsync(SelectedAssetId.Value, "Assigned");
+        await _JS.ToastrSuccess(message: "Asset assigned successfully.");
+
+        await LoadDataAsync();
+
+        SelectedEmployeeId = null;
+        SelectedAssetId = null;
     }
+
 }

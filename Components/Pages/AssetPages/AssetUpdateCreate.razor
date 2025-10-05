@@ -165,21 +165,26 @@ else
 
     private async Task UpsertAsset()
     {
+        if (AssetModel.WarrantyExpiryDate.HasValue && AssetModel.WarrantyExpiryDate < AssetModel.PurchaseDate)
+        {
+            await _JS.ToastrError(message: "Warranty Expiry Date must be after Purchase Date.");
+            return;
+        }
         IsProcessing = true;
 
         if (AssetModel.Id == 0)
         {
             await _assetRepository.CreateAsync(AssetModel);
-            await _JS.ToastrSuccess("Asset Created Successfully");
+            await _JS.ToastrSuccess(message: "Asset Created Successfully");
         }
         else
         {
             await _assetRepository.UpdateAsync(AssetModel);
-            await _JS.ToastrSuccess("Asset Updated Successfully");
+            await _JS.ToastrSuccess(message: "Asset Updated Successfully");
         }
 
         IsProcessing = false;
-        _navigationManager.NavigateTo("/asset");
+        _navigationManager.NavigateTo(uri: "/asset");
     }
 
 }

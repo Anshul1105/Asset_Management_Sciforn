@@ -9,6 +9,8 @@ namespace Asset_Management_Sciforn.Repository.IRepository
         Task<bool> DeleteAsync(int id);
         Task<Employee> GetAsync(int id);
         Task<IEnumerable<Employee>> GetAllAsync();
+        Task<Employee?> GetByEmailAsync(string email);
+
     }
 }
 

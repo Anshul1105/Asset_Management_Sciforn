@@ -9,8 +9,9 @@ namespace Asset_Management_Sciforn.Repository.IRepository
         Task<bool> DeleteAsync(int id);
         Task<Asset> GetAsync(int id);
         Task<IEnumerable<Asset>> GetAllAsync();
+        Task<IEnumerable<Asset>> GetAllAvailableAssetAsync();
         Task<IEnumerable<Asset>> GetFilteredAssetsAsync(string? statusName = null, string? conditionName = null, bool? isSpare = null);
-
+        Task<bool> UpdateAssetStatusAsync(int assetId, string statusName);
     }
 }
 

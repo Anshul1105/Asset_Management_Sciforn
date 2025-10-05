@@ -4,7 +4,6 @@ namespace Asset_Management_Sciforn.Repository.IRepository
 {
     public interface IAssetAssignedRepository
     {
-        // EF Core CRUD
         Task<AssetAssigned> CreateAsync(AssetAssigned obj);
         Task<AssetAssigned> UpdateAsync(AssetAssigned obj);
         Task<bool> DeleteAsync(int id);

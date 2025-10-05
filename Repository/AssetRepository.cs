@@ -49,7 +49,7 @@ namespace Asset_Management_Sciforn.Repository
                 await _db.SaveChangesAsync();
                 return objFromDb;
             }
-            return obj; // return original object if not found
+            return obj;
         }
 
         public async Task<bool> DeleteAsync(int id)
@@ -71,7 +71,7 @@ namespace Asset_Management_Sciforn.Repository
                             .Include(a => a.AssetAssignments)
                             .FirstOrDefaultAsync(a => a.Id == id);
 
-            return obj ?? new Asset(); // Return new instance if not found
+            return obj ?? new Asset();
         }
 
         public async Task<IEnumerable<Asset>> GetAllAsync()
@@ -100,6 +100,34 @@ namespace Asset_Management_Sciforn.Repository
             );
 
             return assets;
+        }
+
+        public async Task<IEnumerable<Asset>> GetAllAvailableAssetAsync()
+        {
+            string sql = @"
+                            SELECT a.*
+                            FROM Asset a
+                            INNER JOIN AssetStatus s ON a.AssetStatusId = s.Id
+                            WHERE s.StatusName = 'Available'
+                        ";
+
+            return await db.QueryAsync<Asset>(sql);
+
+        }
+
+        public async Task<bool> UpdateAssetStatusAsync(int assetId, string statusName)
+        {
+
+            string sql = @"
+                            UPDATE a
+                            SET a.AssetStatusId = s.Id
+                            FROM Asset a
+                            INNER JOIN AssetStatus s ON s.StatusName = @statusName
+                            WHERE a.Id = @assetId
+                        ";
+
+            int rows = await db.ExecuteAsync(sql, new { assetId, statusName });
+            return rows > 0;
         }
     }
 }

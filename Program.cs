@@ -11,7 +11,6 @@ using Asset_Management_Sciforn.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
@@ -41,14 +40,13 @@ builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.Requ
 
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
-// EF Core Implementations
+
 builder.Services.AddScoped<IAssetRepository, AssetRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IAssetAssignedRepository, AssetAssignedRepository>();
 builder.Services.AddScoped<IAssetStatusRepository, AssetStatusRepository>();
 builder.Services.AddScoped<IAssetConditionRepository, AssetConditionRepository>();
 
-// builder.Services.AddScoped<IAssetAssignedQueries, DapperAssetAssignedRepository>();
 
 builder.Services.AddScoped<IDbConnection>(sp =>
 {
@@ -58,7 +56,6 @@ builder.Services.AddScoped<IDbConnection>(sp =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
@@ -79,7 +76,6 @@ app.MapStaticAssets();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
-// Add additional endpoints required by the Identity /Account Razor components.
 app.MapAdditionalIdentityEndpoints();
 
 app.Run();

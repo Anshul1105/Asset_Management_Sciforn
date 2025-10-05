@@ -36,7 +36,7 @@ namespace Asset_Management_Sciforn.Repository
                 await _db.SaveChangesAsync();
                 return objFromDb;
             }
-            return obj; 
+            return obj;
         }
 
         public async Task<bool> DeleteAsync(int id)
@@ -55,7 +55,7 @@ namespace Asset_Management_Sciforn.Repository
         public async Task<Employee> GetAsync(int id)
         {
             var obj = await _db.Employee
-                                .Include(e => e.AssetAssignments) 
+                                .Include(e => e.AssetAssignments)
                                 .FirstOrDefaultAsync(e => e.Id == id);
 
             return obj ?? new Employee
@@ -73,8 +73,13 @@ namespace Asset_Management_Sciforn.Repository
         {
             return await _db.Employee
                             .Where(x => x.IsActive)
-                            .Include(e => e.AssetAssignments) // Include related assets if needed
+                            .Include(e => e.AssetAssignments) 
                             .ToListAsync();
         }
+        public async Task<Employee?> GetByEmailAsync(string email)
+        {
+            return await _db.Employee.FirstOrDefaultAsync(e => e.Email == email);
+        }
+
     }
 }

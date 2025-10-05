@@ -15,7 +15,6 @@
     </div>
     <div class="card-body p-4">
         <div class="row mb-3">
-            <!-- Filter Type Dropdown -->
             <div class="col-md-4">
                 <label class="form-label">Filter By</label>
                 <select class="form-select" @onchange="OnFilterTypeChanged">
@@ -26,7 +25,6 @@
                 </select>
             </div>
 
-            <!-- Second Dropdown -->
             <div class="col-md-4" style="display:@(showSecondDropdown ? "block" : "none")">
                 <label class="form-label">@secondDropdownLabel</label>
                 <select class="form-select" @bind="selectedSecondOption">
@@ -38,7 +36,6 @@
                 </select>
             </div>
 
-            <!-- Apply Filter Button -->
             <div class="col-md-4 d-flex align-items-end">
                 <button class="btn btn-primary w-100" @onclick="ApplyFilter">
                     <i class="bi bi-funnel"></i> Apply Filter
@@ -82,17 +79,26 @@
 </div>
 
 @code {
-    // Dropdown / Filter State
     private string selectedFilterType = "";
     private string selectedSecondOption = "";
     private List<string> secondDropdownOptions = new();
     private string secondDropdownLabel = "";
     private bool showSecondDropdown => selectedFilterType == "Asset Condition" || selectedFilterType == "Asset Status";
-
-    // Asset List
     private IEnumerable<Asset> filteredAssets = new List<Asset>();
 
-    // Called when Filter Type changes
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        filteredAssets = await _assetRepository.GetAllAsync();
+        selectedFilterType = "";
+        selectedSecondOption = "";
+        secondDropdownOptions.Clear();
+    }
     private async Task OnFilterTypeChanged(ChangeEventArgs e)
     {
         selectedFilterType = e.Value?.ToString() ?? "";
@@ -102,13 +108,13 @@
         if (selectedFilterType == "Asset Condition")
         {
             secondDropdownLabel = "Choose Condition";
-            IEnumerable<AssetCondition>? conditions = await _assetConditionRepository.GetAllAsync();
+            var conditions = await _assetConditionRepository.GetAllAsync();
             secondDropdownOptions = conditions.Select(c => c.ConditionName).ToList();
         }
         else if (selectedFilterType == "Asset Status")
         {
             secondDropdownLabel = "Choose Status";
-            IEnumerable<AssetStatus>? statuses = await _assetStatusRepository.GetAllAsync();
+            var statuses = await _assetStatusRepository.GetAllAsync();
             secondDropdownOptions = statuses.Select(s => s.StatusName).ToList();
         }
     }
@@ -126,6 +132,8 @@
         else if (selectedFilterType == "Spare Asset")
             isSpare = true;
 
-        filteredAssets = await _assetRepository.GetFilteredAssetsAsync(statusName, conditionName, isSpare);
+        var result = await _assetRepository.GetFilteredAssetsAsync(statusName, conditionName, isSpare);
+
+        filteredAssets = result.Any() ? result : await _assetRepository.GetAllAsync();
     }
 }

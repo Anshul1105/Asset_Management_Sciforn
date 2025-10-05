@@ -17,7 +17,6 @@ namespace Asset_Management_Sciforn.Data
         [Required]
         public DateTime AssignedDate { get; set; }
 
-        // Navigation Properties
         [ForeignKey("AssetId")]
         public Asset Asset { get; set; }
 

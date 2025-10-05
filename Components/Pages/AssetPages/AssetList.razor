@@ -62,8 +62,8 @@ else
                                 <td>@obj.Name</td>
                                 <td>@obj.AssetType</td>
                                 <td>@obj.MakeModel</td>
-                                <td>@obj.PurchaseDate.ToString("dd/MM/yyyy")</td>
-                                <td>@obj.WarrantyExpiryDate?.ToString("dd/MM/yyyy")</td>
+                                <td>@obj.PurchaseDate.ToString(format: "dd/MM/yyyy")</td>
+                                <td>@obj.WarrantyExpiryDate?.ToString(format: "dd/MM/yyyy")</td>
                                 <td>@obj.AssetCondition?.ConditionName</td>
                                 <td>@obj.AssetStatus?.StatusName</td>
                                 <td>
@@ -117,7 +117,7 @@ else
             finally
             {
                 IsProcessing = false;
-                StateHasChanged(); // Update UI after loading
+                StateHasChanged();
             }
         }
     }
@@ -125,7 +125,6 @@ else
 
     private async Task LoadAssets()
     {
-        //Load All Assets
         AllAssetList = await _assetRepository.GetAllAsync();
     }
 
@@ -143,9 +142,9 @@ else
         {
             var result = await _assetRepository.DeleteAsync(DeleteAssetId);
             if (result)
-                _JS?.ToastrSuccess("Asset Deleted Successfully");
+                _JS?.ToastrSuccess(message: "Asset Deleted Successfully");
             else
-                _JS?.ToastrError("Asset Deletion Failed. Please try again later.");
+                _JS?.ToastrError(message: "Asset Deletion Failed. Please try again later.");
 
             await LoadAssets();
 
