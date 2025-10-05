@@ -1,5 +1,5 @@
-Asset Management Web App.
+# Asset Management Web App.
 
-admin credentials -
-email = admin@gmail.com
+### admin credentials
+email = admin@gmail.com 
 password = admin@1234
