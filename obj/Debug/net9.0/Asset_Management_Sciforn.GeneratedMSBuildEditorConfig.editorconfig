@@ -180,8 +180,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9BcHAucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/Components/Pages/AssetPages/AssetAssigned.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Bc3NldFBhZ2VzL0Fzc2V0QXNzaWduZWQucmF6b3I=
+[/Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/Components/Pages/AssetPages/AssetAssignedPage.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Bc3NldFBhZ2VzL0Fzc2V0QXNzaWduZWRQYWdlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/Components/Pages/AssetPages/AssetList.razor]
@@ -200,10 +200,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9BdXRoLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/Components/Pages/Counter.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Db3VudGVyLnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
 [/Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/Components/Pages/EmployeePages/EmployeeList.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9FbXBsb3llZVBhZ2VzL0VtcGxveWVlTGlzdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
@@ -218,10 +214,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [/Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/Components/Pages/Home.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Ib21lLnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
-[/Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/Components/Pages/Weather.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9XZWF0aGVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/Strider/My Files/Asset_Management_Sciforn/Asset_Management_Sciforn/Components/Routes.razor]

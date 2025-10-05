@@ -62,5 +62,23 @@ namespace Asset_Management_Sciforn.Repository
                 .Include(a => a.Employee)
                 .ToListAsync();
         }
+
+        public Task<IEnumerable<AssetAssigned>> SearchAsync(int? employeeId = null, int? assetId = null)
+        {
+            // var query = _db.AssetAssigned
+            //     .Include(a => a.Asset)
+            //     .Include(a => a.Employee)
+            //     .AsQueryable();
+            // if (employeeId.HasValue)
+            // {
+            //     query = query.Where(a => a.EmployeeId == employeeId.Value);
+            // }
+            // if (assetId.HasValue)
+            // {
+            //     query = query.Where(a => a.AssetId == assetId.Value);
+            // }
+            // return Task.FromResult(query.AsEnumerable());
+            throw new NotImplementedException();
+        }
     }
 }

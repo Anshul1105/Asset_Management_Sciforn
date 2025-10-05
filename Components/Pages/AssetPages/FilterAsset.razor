@@ -1,0 +1,131 @@
+@page "/asset-dashboard"
+@using Asset_Management_Sciforn.Data
+@using Asset_Management_Sciforn.Repository.IRepository
+@inject IAssetRepository _assetRepository
+@inject IAssetConditionRepository _assetConditionRepository
+@inject IAssetStatusRepository _assetStatusRepository
+
+<div class="card shadow border-0 m-4">
+    <div class="card-header bg-black bg-gradient m-lg-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="py-2 text-white">Asset Dashboard</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <div class="row mb-3">
+            <!-- Filter Type Dropdown -->
+            <div class="col-md-4">
+                <label class="form-label">Filter By</label>
+                <select class="form-select" @onchange="OnFilterTypeChanged">
+                    <option value="">-- Select Filter --</option>
+                    <option value="Asset Condition">Asset Condition</option>
+                    <option value="Asset Status">Asset Status</option>
+                    <option value="Spare Asset">Spare Asset</option>
+                </select>
+            </div>
+
+            <!-- Second Dropdown -->
+            <div class="col-md-4" style="display:@(showSecondDropdown ? "block" : "none")">
+                <label class="form-label">@secondDropdownLabel</label>
+                <select class="form-select" @bind="selectedSecondOption">
+                    <option value="">-- Select --</option>
+                    @foreach (var option in secondDropdownOptions)
+                    {
+                        <option value="@option">@option</option>
+                    }
+                </select>
+            </div>
+
+            <!-- Apply Filter Button -->
+            <div class="col-md-4 d-flex align-items-end">
+                <button class="btn btn-primary w-100" @onclick="ApplyFilter">
+                    <i class="bi bi-funnel"></i> Apply Filter
+                </button>
+            </div>
+        </div>
+
+        @if (filteredAssets.Any())
+        {
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Make/Model</th>
+                        <th>Status</th>
+                        <th>Condition</th>
+                        <th>Is Spare?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var asset in filteredAssets)
+                    {
+                        <tr>
+                            <td>@asset.Name</td>
+                            <td>@asset.AssetType</td>
+                            <td>@asset.MakeModel</td>
+                            <td>@asset.AssetStatus?.StatusName</td>
+                            <td>@asset.AssetCondition?.ConditionName</td>
+                            <td>@(asset.IsSpare ? "Yes" : "No")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-info">No assets found.</div>
+        }
+    </div>
+</div>
+
+@code {
+    // Dropdown / Filter State
+    private string selectedFilterType = "";
+    private string selectedSecondOption = "";
+    private List<string> secondDropdownOptions = new();
+    private string secondDropdownLabel = "";
+    private bool showSecondDropdown => selectedFilterType == "Asset Condition" || selectedFilterType == "Asset Status";
+
+    // Asset List
+    private IEnumerable<Asset> filteredAssets = new List<Asset>();
+
+    // Called when Filter Type changes
+    private async Task OnFilterTypeChanged(ChangeEventArgs e)
+    {
+        selectedFilterType = e.Value?.ToString() ?? "";
+        selectedSecondOption = "";
+        secondDropdownOptions.Clear();
+
+        if (selectedFilterType == "Asset Condition")
+        {
+            secondDropdownLabel = "Choose Condition";
+            IEnumerable<AssetCondition>? conditions = await _assetConditionRepository.GetAllAsync();
+            secondDropdownOptions = conditions.Select(c => c.ConditionName).ToList();
+        }
+        else if (selectedFilterType == "Asset Status")
+        {
+            secondDropdownLabel = "Choose Status";
+            IEnumerable<AssetStatus>? statuses = await _assetStatusRepository.GetAllAsync();
+            secondDropdownOptions = statuses.Select(s => s.StatusName).ToList();
+        }
+    }
+
+    private async Task ApplyFilter()
+    {
+        string? statusName = null;
+        string? conditionName = null;
+        bool? isSpare = null;
+
+        if (selectedFilterType == "Asset Status")
+            statusName = selectedSecondOption;
+        else if (selectedFilterType == "Asset Condition")
+            conditionName = selectedSecondOption;
+        else if (selectedFilterType == "Spare Asset")
+            isSpare = true;
+
+        filteredAssets = await _assetRepository.GetFilteredAssetsAsync(statusName, conditionName, isSpare);
+    }
+}

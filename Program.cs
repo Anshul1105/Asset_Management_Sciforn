@@ -45,14 +45,17 @@ builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSe
 builder.Services.AddScoped<IAssetRepository, AssetRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IAssetAssignedRepository, AssetAssignedRepository>();
+builder.Services.AddScoped<IAssetStatusRepository, AssetStatusRepository>();
+builder.Services.AddScoped<IAssetConditionRepository, AssetConditionRepository>();
 
-builder.Services.AddScoped<IAssetAssignedQueries, DapperAssetAssignedRepository>();
+// builder.Services.AddScoped<IAssetAssignedQueries, DapperAssetAssignedRepository>();
 
 builder.Services.AddScoped<IDbConnection>(sp =>
 {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
     return new SqlConnection(connectionString);
 });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

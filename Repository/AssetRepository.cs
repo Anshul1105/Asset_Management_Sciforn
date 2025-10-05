@@ -1,16 +1,25 @@
 using Microsoft.EntityFrameworkCore;
 using Asset_Management_Sciforn.Data;
 using Asset_Management_Sciforn.Repository.IRepository;
+using Microsoft.Data.SqlClient;
+using Dapper;
+using System.Data;
 
 namespace Asset_Management_Sciforn.Repository
 {
     public class AssetRepository : IAssetRepository
     {
         private readonly ApplicationDbContext _db;
+        private readonly IDbConnection db;
 
-        public AssetRepository(ApplicationDbContext db)
+        private readonly IWebHostEnvironment webHostEnvironment;
+
+        public AssetRepository(ApplicationDbContext _db, IDbConnection db, IWebHostEnvironment webHostEnvironment)
         {
-            _db = db;
+            this._db = _db;
+            this.db = db;
+            this.webHostEnvironment = webHostEnvironment;
+
         }
 
         public async Task<Asset> CreateAsync(Asset obj)
@@ -72,6 +81,25 @@ namespace Asset_Management_Sciforn.Repository
                             .Include(a => a.AssetStatus)
                             .Include(a => a.AssetAssignments)
                             .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Asset>> GetFilteredAssetsAsync(string? statusName = null, string? conditionName = null, bool? isSpare = null)
+        {
+            string sql = @"
+                            SELECT *
+                            FROM Asset a
+                            WHERE 
+                                (@statusName IS NULL OR a.AssetStatusId IN (SELECT Id FROM AssetStatus WHERE StatusName = @statusName))
+                                AND (@conditionName IS NULL OR a.AssetConditionId IN (SELECT Id FROM AssetCondition WHERE ConditionName = @conditionName))
+                                AND (@isSpare IS NULL OR a.IsSpare = @isSpare)
+                            ";
+
+            var assets = await db.QueryAsync<Asset>(
+                sql,
+                new { statusName, conditionName, isSpare }
+            );
+
+            return assets;
         }
     }
 }

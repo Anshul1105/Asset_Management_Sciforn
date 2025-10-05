@@ -10,17 +10,7 @@ namespace Asset_Management_Sciforn.Repository.IRepository
         Task<bool> DeleteAsync(int id);
         Task<AssetAssigned?> GetAsync(int id);
         Task<IEnumerable<AssetAssigned>> GetAllAsync();
+        Task<IEnumerable<AssetAssigned>> SearchAsync(int? employeeId = null, int? assetId = null);
     }
 
-    public interface IAssetAssignedQueries
-    {
-        // Dapper Filters / Reporting
-        Task<int> GetTotalAssetsAsync();
-        Task<IEnumerable<Asset>> GetAssetsByTypeAsync(string type);
-        Task<IEnumerable<Asset>> GetAssignedAssetsAsync();
-        Task<IEnumerable<Asset>> GetAvailableAssetsAsync();
-        Task<IEnumerable<Asset>> GetUnderRepairAssetsAsync();
-        Task<IEnumerable<Asset>> GetRetiredAssetsAsync();
-        Task<IEnumerable<Asset>> GetSpareAssetsAsync();
-    }
 }
